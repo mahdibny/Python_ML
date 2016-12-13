@@ -114,5 +114,19 @@ def get_quantile_count(group,q=.5):
 diversity=top1000.groupby(['year','sex']).apply(get_quantile_count)
 diversity=diversity.unstack('sex')
 diversity.head()
-
+diversity=diversity.astype(float)
 diversity.plot(title="number of popular names in to 50%")
+
+"""
+The last letter revolution
+"""
+#didnt work
+
+
+#fist aggregate all of the irthds in full set by year,sex and final letter
+get_last_letter=lambda x:x[-1]
+last_letters=names.name.map(get_last_letter)
+last_letters.names='last_letter'
+
+#table=names.pivot_table('births',index='last_letter',columns=['sex','year'],aggfunc=sum)
+
