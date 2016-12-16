@@ -8,6 +8,7 @@ Learning Pandas Chapter 5
 """
 from pandas import Series,DataFrame
 import pandas as pd
+import numpy as np
 
 #two important datastructures
 #Series
@@ -59,6 +60,7 @@ dtype: int64
 """
 
 '''''''''''''''
+Constructing Series
 '''''''''''''''
 
 states=['California','Ohio','Oregon','Texas']
@@ -93,10 +95,9 @@ obj4.index.name='state'
 obj.index=['Bob','Steve','Jeff','Ryan']
 
 
-"""
-Data Frame
-"""
-
+"""""""""""""""""""""""
+Constructing Data Frame
+"""""""""""""""""""""""
 #tabular, spreadsheet like datastuct
 #row and colmns thought of as a dict of series
 
@@ -106,11 +107,77 @@ data={'state':['Ohio','Ohio','Ohio','Nevada','Nevada'],
       'year':[2000,2001,2002,2001,2002],
         'pop':[1.5,1.7,3.6,2.4,2.9]}
 frame=DataFrame(data)
+print(frame)
 
 #if you want a specific sequence of colums you can specify
 frametemp=DataFrame(data,columns=['year','state','pop'])
 frame2=DataFrame(data,columns=['year','state','pop','debt'],
                  index=['one','two','three','four','five'])
+print(frame2)
 #if you enter a non colm it will be nan
-#one is also able to mark indecies
+#one is also able to make a name for indecies
 #you can access feature by using dot or ['year']
+
+#to retrieve a row you can use the ix method
+print(frame2.ix['three']) #printing out a row with their colms
+
+#setting values for debt
+frame2['debt']=16.5
+print(frame2)
+
+frame2['debt']=np.arange(5.)
+print(frame2)
+#the list or arrays must match the lenght of the Frame
+#if we use a series instead then the remaning index will hold nan
+val=Series([-1.2,-1.5,-1.7],index=['two','four','five'])
+frame2['debt']=val
+print(frame2)
+
+#if you assign a colm that dosent exist it will be create it.
+#the del key world will delelte as with a dict
+frame2['eastern']=frame2.state=='Ohio'
+print(frame2)
+del frame2['eastern']
+print(frame2.columns)
+
+
+#Another way to form a dataframe id by using nested dicts
+pop={'Nevada':{2001:2.2,2002:2.9},'Ohio':{2000:1.5,2001:1.7,2002:3.6}}
+frame3=DataFrame(pop)
+print(frame3)
+#one can transposee the data
+frame3Trans=frame3.T
+print(frame3Trans)
+
+#the jeys in the inner dicts are unioned and sorted as index
+#this int true if an explicit index is specified
+frame3temp=DataFrame(pop,index=[2001,2002,2003])
+print(frame3temp)
+
+#Dicts of Series are treated similarly
+pdata={'Ohio':frame3['Ohio'][:-1],'Nevada':frame3['Nevada'][:2]}
+pdataFrame=DataFrame(pdata)
+print(pdataFrame)
+
+#There are more constructors in table 5.1
+#if you have index.name and columns.name set it will look like
+frame3.index.name='year'
+frame3.columns.name='state'
+print(frame3)
+"""
+state  Nevada  Ohio
+year               
+2000      NaN   1.5
+2001      2.2   1.7
+2002      2.9   3.6
+
+"""
+
+#value atrribute gives us data
+print(frame3.values)
+
+
+"""
+Index Objects
+"""
+
