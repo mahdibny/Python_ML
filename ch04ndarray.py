@@ -136,7 +136,7 @@ print(data[-(names=='Bob')]) #- same as !
 
 mask=(names=='Bob') | (names=='Will')
 print(mask)
-data(mask)
+print(data[mask])
 
 #Selecting data from an array by boolean indexing always creates a copy of the 
 #data, even if the returned array is unchanged.
@@ -147,8 +147,8 @@ data[data<0]=0
 print(data)
 
 #set where ever !==Joe =7
-data11=data[names!='Joe']=7
-print(data11)
+#data[names!='Joe']=7
+#print(data11)
 
 """Fancy Indexing"""
 #term to describe indexing using integer arrays
@@ -216,4 +216,72 @@ array([[[ 0,  4],
 
 """
 
+"""
+Universal Functions: Fast Element-wise Array Functions
+ufunc - funct that performs elementwise operations on 
+data in ndarrays.
+"""
+#sqrt and exp function
+arrUF=np.arange(10)
+print(np.sqrt(arrUF))
+print(np.exp(arrUF))
 
+#these are the unary functs
+#there are two binasy ufuncts like add and maxium using 2 arrays
+
+x=np.random.randn(8)
+y=np.random.randn(8)
+print(x)
+print(y)
+
+max_xy=np.maximum(x,y)
+print(max_xy)
+
+#some ufunct can retrutn multiple arrays
+#arrays.modf divmod returns the fractional and integral parts a floating point
+#array
+arrDf=np.random.randn(7)*5
+print(np.modf(arrDf))
+
+
+""""
+Data Processing Using Arrays
+"""
+#vectorization instead of for loops
+points=np.arange(-5,5,0.01)
+xs,ys=np.meshgrid(points,points)
+
+import matplotlib.pyplot as plt
+z=np.sqrt(xs**2+ys**2)
+plt.imshow(z,cmap=plt.cm.gray)
+plt.colorbar()
+plt.title("Image plot of $\sqrt{x^2+y^2}$ for a grid of values")
+
+"""
+Expressing Conditional Logic as Array Operations 
+"""
+#numpy.where vectorized version of the ternary expression x
+# if condition else y
+xarr=np.array([1.1,1.2,1.3,1.4,1.5])
+yarr=np.array([2.1,2.2,2.3,2.4,2.5])
+cond=np.array([True,False,True,True,False])
+
+#suppose we want to take a value from xarr when cond is True
+#otherwise use False
+
+result=[(x if c else y) for x,y,c in zip(xarr,yarr,cond)]
+print(result)
+#lots of problems can happen not very large arrays
+# np.where
+result=np.where(cond,xarr,yarr)
+#the second and third arguments can be scalars too
+
+arrWh=np.random.randn(4,4)
+arrWh1=np.where(arrWh>0,2,-2)
+arrWh2=np.where(arrWh>0,2,arrWh)
+print(arrWh)
+print(arrWh1)
+print(arrWh2)
+print("Here")
+
+#arrays passed in wheres can be more than just equal sized arrays
