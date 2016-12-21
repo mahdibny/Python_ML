@@ -282,6 +282,28 @@ arrWh2=np.where(arrWh>0,2,arrWh)
 print(arrWh)
 print(arrWh1)
 print(arrWh2)
-print("Here")
+
 
 #arrays passed in wheres can be more than just equal sized arrays
+
+"""
+Mathematical and Statistical Methods
+"""
+#many statiscal methods are availible 
+arrSt=np.random.rand(5,4) #normally distributed data
+print(arrSt.mean())
+print(np.mean(arrSt))
+print(arrSt.sum())
+# mean and sum have optional axis arguments so one can get sum and 
+#mean from a specific dimension of the array
+print(arrSt.mean(axis=1))
+print(arrSt.sum(0))
+
+#methods like cumsum and cumprod do not aggregate, produce arra of inter results
+arrSt1=np.array([[0,1,2],[3,4,5],[6,7,8]])
+print(arrSt1.cumsum(0))
+print(arrSt1.cumprod(1))
+
+"""
+Methods for Boolean Arrays
+"""
