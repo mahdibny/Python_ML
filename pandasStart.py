@@ -180,4 +180,71 @@ print(frame3.values)
 """
 Index Objects
 """
+#index objects are responsible for holding the axis labels and other metadata
 
+objI=Series(range(3),index=['a','b','c'])
+indexI=objI.index
+print(indexI)
+
+#index objects are immutable and cannot be modified by user
+indexI2=pd.Index(np.arange(3))
+objI2=Series([1.5,-2.5,0],index=indexI2)
+
+#in addition to being array like index also functions as a fixed-size set
+print('Ohio' in frame3.columns)
+print(2003 in frame3.index)
+
+"""
+Essential Functionality
+"""
+
+"""
+Reindexing
+"""
+#reindex createa new object wth the data conformed to a new index
+objRe=Series([4.5,7.2,-5.3,3.6],index=['d','b','a','c'])
+print(objRe)
+#calling reindex rearranges the data
+objRe2=objRe.reindex(['a','b','c','d','e'])
+print(objRe2)
+#fill_value=0
+objRe2=objRe.reindex(['a','b','c','d','e'],fill_value=0)
+print(objRe2)
+
+#ffill
+obj3=Series(['blue','purple','yellow'],index=[0,2,4])
+obj3.reindex(range(6),method='ffill')
+print(obj3)
+
+#with the dataframe reindex can alter either the row index, colums, or both
+frameRe=DataFrame(np.arange(9).reshape((3,3)),index=['a','c','d'],columns=['Ohio','Texas','California'])
+print(frameRe)
+
+frameRe2=frameRe.reindex(['a','b','c','d'])
+print(frameRe2)
+
+#columns can be reindexed using columns keyword
+statesRe=['Texas','Utah','California']
+frameRe.reindex(columns=statesRe)
+
+#interpolation
+frameRe.reindex(index=['a','b','c','d'],method='ffill',columns=statesRe)
+frameRe.ix[['a','b','c','d'],statesRe]
+
+"""
+Dropping entries from an axis
+"""
+#drop method
+objDr=Series(np.arange(5.),index=['a','b','c','d','e'])
+new_objDr=objDr.drop('c')
+new_objDr2=objDr.drop(['d','c'])
+
+dataDr=DataFrame(np.arange(16).reshape((4,4)),index=['Ohio','Colorado','Utah','New York'],columns=['one','two','three','four'])
+dataDr.drop(['Colorado','Ohio'])
+
+dataDr.drop('two',axis=1)
+dataDr.drop(['two','four'],axis=1)
+
+"""
+Indexing, Selection, and filtering
+"""
