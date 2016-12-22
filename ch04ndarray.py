@@ -307,3 +307,132 @@ print(arrSt1.cumprod(1))
 """
 Methods for Boolean Arrays
 """
+#boolean values are 0,1 the sum is often used as a means of counting True/False
+arrB=np.random.rand(100)
+print((arrB>0).sum())
+
+#any and all, see if all values true and if any true in array
+bools=np.array([False,False,True,False])
+print(bools.any())
+print(bools.all())
+
+"""
+Sorting
+"""
+#NumPy can be sorted inplace using sort methods
+arrSo=np.random.rand(8)
+print(arrSo)
+arrSo.sort()
+print(arrSo)
+
+#multidimensional arrays can have each ID dection of values sorted in place
+#along axi by passing the asis number to sor
+arrSo1=np.random.rand(5,3)
+print(arrSo1)
+arrSo1.sort(1)
+print(arrSo1)
+#np.sort retuens copy of sorted array instead of inplace sort or is it
+
+"""
+Unique and Other Set Logic
+"""
+names1=np.unique(names)
+print(names1)
+
+#pure python alternative
+print(sorted(set(names)))
+
+#np.ind1d test membership of valuees in one array to another
+values=np.array([6,0,0,3,2,5,6])
+print(np.in1d(values,[2,3,6]))
+
+"""
+File Input and Output with Arrays
+"""
+#NumPy is able to save and load data to and from disk in text or binary format
+#np.save np.load
+arrfi=np.arange(10)
+np.save('some_array',arrfi)
+np.load('some_array.npy')
+
+#zip files np.savez 
+
+"""
+Saving and Loading Text Files
+"""
+#np.loadtxt
+#np.genfromtxt
+arrSL=np.loadtxt('array_ex.txt',delimiter=',')
+print(arrSL)
+#np.savetxt
+
+"""
+Linear Algebra
+"""
+xLA=np.array([[1.,2.,3.],[4.,5.,6.]])
+yLA=np.array([[6.,23.],[-1,7],[8,9]])
+print(xLA)
+print(yLA)
+xLA.dot(yLA)
+np.dot(xLA,yLA)
+print(xLA.dot(yLA))
+print(np.dot(xLA,yLA))
+
+from numpy.linalg import inv,qr
+X=np.random.randn(5,5)
+mat=X.T.dot(X)
+print(np.dot(xLA,yLA))
+
+print(X)
+print(mat)
+
+inv(mat)
+print(inv(mat))
+mat.dot(inv(mat))
+print(mat.dot(inv(mat)))
+
+q,r=qr(mat) #qr decomposition
+print(r)
+
+"""
+Random Number Generation
+"""
+#normal
+samples=np.random.normal(size=(4,4))
+from random import normalvariate
+N=1000000
+"""
+run code for times
+"""
+#timeit samples = [normalvariate(0,1) for _ in xrange(N)]
+#timeit np.random.normal(size=N)
+
+"""
+Example: Random Walks
+"""
+#simulation of random walks
+import random
+position=0
+walk=[position]
+step=1000
+for i in xrange(step):
+    step=1 if random.randint(0,1) else -1
+    position += step
+    walk.append(position)
+
+#np.random module to draw 1,000 coin     
+nsteps=1000
+draws=np.random.randint(0,2,size=nsteps)
+steps=np.where(draws>0,1,-1)
+walk=steps.cumsum()
+#extract statistics like the min and max value
+print(walk.min())
+print(walk.max())
+
+#first crossing time, the step at which rand walk reaches a particular value
+#10 steps away from origin in either direction
+print((np.abs(walk)>=10).argmax())
+
+"""
+Simulationg Many Random Walks at Once
+"""
