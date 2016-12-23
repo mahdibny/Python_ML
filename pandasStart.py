@@ -248,3 +248,38 @@ dataDr.drop(['two','four'],axis=1)
 """
 Indexing, Selection, and filtering
 """
+ObjInd=Series(np.arange(4.),index=['a','b','c','d'])
+#one can slice these structures and set them to certain values using thier ind
+
+#for Data Frames
+dataINS=DataFrame(np.arange(16).reshape((4,4)),
+                  index=['Ohio','Colorado','Utah','New York'],
+                  columns=['one','two','three','four'])
+print(dataINS)
+print(dataINS['two'])
+print(dataINS[['three','one']])
+
+print(dataINS[:2]) #first two rows
+print(dataINS[dataINS['three']>5]) #print where three value is >5
+
+print(dataINS<5)
+dataINS[dataINS<5]=0
+print(dataINS) #data values change to 0 where true from previous command
+
+#for data indexing on the rows we use ix enables one to select subset of rows
+#and columns from DataFrame with NumPy like notation 
+print(dataINS.ix['Colorado',['two','three']])
+"""
+Colorado Row values for cols two,three
+output 
+two      5
+three    6
+Name: Colorado, dtype: int32
+"""
+print(dataINS.ix[['Colorado','Utah'],[3,0,1]])
+print(dataINS.ix[2]) #gets second index row
+print(dataINS.ix[:'Utah','two']) #go till Utah get two cols
+
+print(dataINS.ix[data.three>5,:3]) #get data where three is >5 and get 3 colms 
+
+#many different ways inwhich one can manipulate data
