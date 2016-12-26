@@ -377,4 +377,15 @@ print(frameSor.sort_index(axis=1,ascending=False))
 objnew=Series([4,7,-3,2])
 print(objnew.order())
 
+#you can sort by a specific colum
+print(frameSor.sort_index(by='b'))
+print(frameSor.sort_index(by=['a','b']))
 
+#ranking is related to sorting 
+#gives back the ranks so lowest is 1 ties are #.5
+objSort1=Series([7,-5,7,4,2,0,4])
+print(objSort1)
+print(objSort1.rank())
+#this will have no .5 after
+print(objSort1.rank(method='first'))
+#rank in descending order
