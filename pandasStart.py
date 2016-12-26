@@ -389,3 +389,61 @@ print(objSort1.rank())
 #this will have no .5 after
 print(objSort1.rank(method='first'))
 #rank in descending order
+print(objSort1.rank(ascending=False,method='max'))
+#ranks can also be done with dataframes and axis
+print(frameSor.rank(axis=1))
+
+"""
+Axis indexes with dupilcate values
+"""
+#some indecies are unique but this is not always the case
+objDup=Series(range(5),index=['a','a','b','b','c'])
+print(objDup)
+print(objDup.index.is_unique)
+
+dfDup=DataFrame(np.random.rand(4,3),index=['a','a','b','b'])
+
+"""
+Summarizing and Computing Descriptive Statistics
+"""
+
+dfSuc=DataFrame([[1.4,np.nan],[7.1,-4.5],[np.nan,np.nan],[0.75,-1.3]],
+             index=['a','b','c','d'],columns=['one','two'])
+print(dfSuc)
+print(dfSuc.sum())
+print(dfSuc.sum(axis=1))
+print(dfSuc.sum(axis=1,skipna=False))
+#page 139 for Table
+
+"""
+Correlation and Covariance
+"""
+import pandas.io.data as web
+all_data={}
+for ticker in ['AAPL','IBM','MSFT','GOOG']:
+    all_data[ticker]=web.get_data_yahoo(ticker, '1/1/2000','1/1/2010')
+
+price=DataFrame({tic:data['Adj Close']
+                 for tic, data in all_data.iteritems()})
+
+volume=DataFrame({tic:data['Volume']
+                 for tic, data in all_data.iteritems()})
+
+returns=price.pct_change()
+
+#corr method of Series computes the correlation of te overlapping,
+#non na index values in two Series 
+print(returns.MSFT.corr(returns.IBM))
+print(returns.MSFT.cov(returns.IBM))
+
+#corr method of DF returns full correlation or cov matrix
+print(returns.corr())
+print(returns.cov())
+
+#corrwith pairwuse correlations bt dataframes
+print(returns.corrwith(returns.IBM))
+print(returns.corrwith(volume))
+
+"""
+Unique Values, Value Counts, and Membership
+"""
