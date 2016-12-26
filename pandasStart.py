@@ -280,6 +280,101 @@ print(dataINS.ix[['Colorado','Utah'],[3,0,1]])
 print(dataINS.ix[2]) #gets second index row
 print(dataINS.ix[:'Utah','two']) #go till Utah get two cols
 
-print(dataINS.ix[data.three>5,:3]) #get data where three is >5 and get 3 colms 
+print(dataINS.ix[dataINS.three>5,:3]) #get data where three is >5 and get 3 colms 
 
 #many different ways inwhich one can manipulate data
+
+print("here")
+"""
+Arithmetic and data alignment
+"""
+s1=Series([7.3,-2.5,3.4,1.5],index=['a','c','d','e'])
+s2=Series([-2.1,3.6,-1.5,4,3.1],index=['a','c','e','f','g'])
+print(s1)
+print(s2)
+print(s1+s2)
+#nan for data that does not overlapp
+
+#in the case of a dataframe
+df1=DataFrame(np.arange(9.).reshape((3,3)),columns=list('bcd'),
+              index=['Ohio','Texas','Oregon'])
+df2=DataFrame(np.arange(12.).reshape((4,3)),columns=list('bde'),
+              index=['Utah','Ohio','Texas','Oregon'])
+print(df1)
+print(df2)
+print(df1+df2)
+#adding two dfs will get the unions of the two sets
+
+"""
+Arithmetic methods with fill values
+"""
+#in arithmetic operations between diff indexed objects, you can fill with 
+#special values like 0
+
+df1=DataFrame(np.arange(12.).reshape((3,4)),columns=list('abcd'))
+df2=DataFrame(np.arange(20.).reshape((4,5)),columns=list('abcde'))
+print(df1)
+print(df2)
+df1.add(df2,fill_value=0)
+print(df1.reindex(columns=df2.columns,fill_value=0))
+
+"""
+Operations between DataFrame and Series
+"""
+arr=np.arange(12.).reshape((3,4))
+print(arr)
+print(arr[0])
+print(arr-arr[0]) #each row - arr[0]
+#this is broadcasting shown in Chapter 12
+
+frame12=DataFrame(np.arange(12.).reshape((4,3)),columns=list('bde'),
+                  index=['Utah','Ohio','Texas','Oregon'])
+series=frame12.ix[0]
+print(frame12-series)
+
+series2=Series(range(3),index=['b','e','f'])
+print(frame12+series2)
+
+"""
+Function application and mapping
+"""
+#NumPy ufuncs work fine with pandas objects
+frameAM=DataFrame(np.random.randn(4,3),columns=list('bde'),
+               index=['Utah','Ohio','Texas','Oregon'])
+print(frameAM)
+print(np.abs(frameAM))
+
+format=lambda x: '%.2f' % x
+def f(x):
+    return Series([x.min(),x.max()],index=['min','max'])
+
+frameAM.apply(f)
+
+#format decimal places
+format=lambda x: '%.2f' % x
+frameAM.applymap(format)
+
+frameAM['e'].map(format)
+
+"""
+Sorting and ranking
+"""
+#one can sort by ined using the sort_index
+objSor=Series(range(4),index=['d','a','b','c'])
+print(objSor)
+print(objSor.sort_index())
+
+frameSor=DataFrame(np.arange(8).reshape((2,4)),
+                   index=['three','one'],
+                    columns=['d','a','b','c'])
+print(frameSor)
+print(frameSor.sort_index()) #sort by rows
+print(frameSor.sort_index(axis=1)) #sort by columns
+
+print(frameSor.sort_index(axis=1,ascending=False))
+
+#sorting the series by its values.use order method
+objnew=Series([4,7,-3,2])
+print(objnew.order())
+
+
