@@ -518,5 +518,15 @@ dataE.fillna(data.mean()) #fillna with mean values
 """
 Hierarchical Indexing
 """
+# important feature of pandas enabling to have more than one indexing levels 
+# on an axis 
 
+data=Series(np.random.randn(10),
+            index=[['a','a','a','b','b','b','c','c','d','d'],
+                   [1,2,3,1,2,3,1,2,2,3]])
+print(data)
+print(data.index)
+print(data.unstack()) #reorders columns and rows
+print(data.unstack().stack())
 
+#in dataframes
