@@ -447,3 +447,50 @@ print(returns.corrwith(volume))
 """
 Unique Values, Value Counts, and Membership
 """
+objUV=Series(['c','a','d','a','a','b','b','c','c'])
+uniques=objUV.unique()
+print(uniques) #prints unique values in obj
+print(objUV.value_counts())
+print(pd.value_counts(objUV.values,sort=False))
+
+# isin is responsible for seeing if values in array
+mask=objUV.isin(['b','c'])
+print(mask)
+print(objUV[mask])
+
+dataUV=DataFrame({'Qu1':[1,3,4,3,4],
+                  'Qu2':[2,3,1,2,3],
+                    'Qu3':[1,5,2,4,4]})
+print(dataUV)
+resultsUV=dataUV.apply(pd.value_counts).fillna(0)
+
+"""
+Handling Missing Data
+"""
+#isnull lets you check if values are NaN
+#none value is NA as well string_data[0]=None
+
+#    dropna 
+#    fillna
+#    isnull
+#    notnull
+
+"""
+Filtering Out Missing Data
+"""
+from numpy import nan as NA
+data=Series([1,NA,3.5,NA,7])
+data.dropna()
+print(data[data.notnull()])
+dataFO=DataFrame([[1,6.5,3],[1,NA,NA],[NA,NA,NA],[NA,6.5,3]])
+print(dataFO)
+cleaned=dataFO.dropna()
+print(cleaned)
+print(dataFO.dropna(how='all'))
+print(dataFO[4])
+print(dataFO.dropna(axis=1,how='all')) #only drops rows that are all NA
+
+dfFOs=DataFrame(np.random.randn(7,3))
+
+
+
