@@ -487,10 +487,36 @@ print(dataFO)
 cleaned=dataFO.dropna()
 print(cleaned)
 print(dataFO.dropna(how='all'))
-print(dataFO[4])
+dataFO[4]
 print(dataFO.dropna(axis=1,how='all')) #only drops rows that are all NA
 
 dfFOs=DataFrame(np.random.randn(7,3))
+dfFOs.ix[:4,1]=NA
+dfFOs.ix[:2,2]=NA
+print(dfFOs)
+print(dfFOs.dropna(thresh=3)) #keep data with certain amount of observations
 
+"""
+Filling in Missing Data
+"""
+#filling in the holes in in data
+print(dfFOs.fillna(0))
+print(dfFOs.fillna({1:0.5,3:-1}))
+_=dfFOs.fillna(0,inplace=True) #refernece to filled object
+
+#interpolation methods available for reindexing 
+df=DataFrame(np.random.randn(6,3))
+df.ix[2:,1]=NA
+df.ix[4:,2]=NA
+print(df)
+print(df.fillna(method='ffill'))
+print(df.fillna(method='ffill',limit=2)) #column 2
+
+dataE=Series([1,NA,3.5,NA,7])
+dataE.fillna(data.mean()) #fillna with mean values
+
+"""
+Hierarchical Indexing
+"""
 
 
